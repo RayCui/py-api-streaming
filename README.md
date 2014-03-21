@@ -15,11 +15,11 @@ Update the following information in connect_to_stream method in streaming.py:
 
 To execute, run the following command:
 
-    python streaming.py [DisplayHeartbeat]
+    python streaming.py [options]
 
-where DisplayHeartbeat is a flag to determine whether heartbeat will be displayed.
+    options:
 
-To show heartbeat, replace [DisplayHeartbeat] with "showhb"
+    -b (or --displayHeartBeat):    A flag to determine whether HeartBeat will be displayed
 
 ### Sample Output
 

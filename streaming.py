@@ -3,20 +3,19 @@ Demonstrates streaming feature in OANDA open api
 
 To execute, run the following command:
 
-python streaming.py [DisplayHeartbeat]
+python streaming.py [options]
 
-where DisplayHeartbeat is a flag to determine whether heartbeat will be displayed.
-
-To show heartbeat, replace [DisplayHeartbeat] with "showhb"
+To show heartbeat, replace [options] by -b or --displayHeartBeat
 """
 
 import requests
 import json
-import sys
+
+from optparse import OptionParser
 
 def connect_to_stream():
     """
-    For your testing, please use a proper domain (like fxpractice/fxtrade) with your access token and account ID
+    For your testing, please use a proper domain (like stream-fxpractice/fxtrade) with your access token and account ID
 
     Feel free to include more instruments (10 instruments at most)
     """
@@ -49,10 +48,20 @@ def demo(displayHeartbeat):
                 if msg.has_key("instrument"):
                     print line
 
-if __name__ == "__main__":
-    argc = len(sys.argv)
+def main():
+    usage = "usage: %prog [options]"
+    parser = OptionParser(usage)
+    parser.add_option("-b", "--displayHeartBeat", dest = "verbose", action = "store_true", 
+                        help = "Display HeartBeat in streaming data")
     displayHeartbeat = False
-    if argc > 1:
-        if (sys.argv[1]).lower() == "showhb":
-            displayHeartbeat = True
+
+    (options, args) = parser.parse_args()
+    if len(args) > 1:
+        parser.error("incorrect number of arguments")
+    if options.verbose:
+        displayHeartbeat = True
     demo(displayHeartbeat)
+
+
+if __name__ == "__main__":
+    main()
